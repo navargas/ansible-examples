@@ -1,0 +1,21 @@
+---
+- hosts: aws
+  roles:
+    - ansible-pip
+  tasks:
+    - name: Docker-PY
+      become: yes
+      pip:
+        name: "{{ item }}"
+      with_items:
+      - six==1.4
+      - docker-py==1.1.0
+    - name: Copy docker image to target 
+      copy: src=./myimage.docker.tar dest=/tmp/
+    - name: Import docker image
+      shell: docker load -i /tmp/myimage.docker.tar
+    - name: Run docker image
+      docker:
+        name: imageinst
+        image: myimage
+        state: present
