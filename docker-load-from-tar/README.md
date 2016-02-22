@@ -22,6 +22,7 @@ roles:
 
 ## Install the docker-py python library
 `"{{ item }}"` is replaced with items from the `with_items` array.
+The line ` become: yes` will make this process run as root.
 ```yaml
 - name: Docker-PY
       become: yes
